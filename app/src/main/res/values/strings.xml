@@ -2,8 +2,12 @@
     <!-- APP Name -->
     <string name="app_name">Book Store App</string>
 
-    <!-- Title for the activity to add a book pet -->
+    <!-- Title for the activity to add/edit book -->
     <string name="editor_activity_title_new_book">Add Book</string>
+    <string name="editor_activity_title_edit_book">Edit Book</string>
+
+    <!-- Title for the empty activity -->
+    <string name="empty_view_text">Waiting for new stories!!</string>
 
     <!-- Input hints -->
     <string name="hint_book_product_name">Product Name</string>
@@ -12,12 +16,29 @@
     <string name="hint_book_supplier_name">Supplier Name</string>
     <string name="hint_book_supplier_phone_number">Supplier Phone Number</string>
 
-    <!-- Saving Toasts messages -->
+    <!-- Labels -->
+    <string name="quantity_label">Quantity:</string>
+    <string name="currency_label">$</string>
+
+    <!-- Toasts messages -->
     <string name="save_book_empty">Please fill in all fields</string>
-    <string name="save_book_error">Error with saving Book</string>
-    <string name="save_book_sucess">Book saved with row id: <xliff:g id="newRowId">%d</xliff:g></string>
+    <string name="save_book_error">Error saving Book</string>
+    <string name="save_book_sucess">Book saved</string>
+    <string name="update_book_error">Error updating Book</string>
+    <string name="update_book_successful">Book updated</string>
+    <string name="delete_book_error">Error deleting Book</string>
+    <string name="delete_book_successful">Book deleted</string>
 
     <!-- Actions Labels -->
     <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
+
+
+    <!-- Dialog messages -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep Editing</string>
+    <string name="delete_dialog_msg">Delete this book?</string>
 
 </resources>
