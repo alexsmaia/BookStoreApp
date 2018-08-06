@@ -28,6 +28,8 @@
     <string name="update_book_successful">Book updated</string>
     <string name="delete_book_error">Error deleting Book</string>
     <string name="delete_book_successful">Book deleted</string>
+    <string name="item_byed">You bye the item</string>
+    <string name="out_stock">Out of stock</string>
 
     <!-- Actions Labels -->
     <string name="action_save">Save</string>

@@ -62,11 +62,11 @@ public class CatalogActivity extends AppCompatActivity implements
                 // Create new intent to go to {@link EditorActivity}
                 Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
 
-                // Append  "id" {@link BookEntry#CONTENT_URI}.
-                Uri currentPetUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, id);
+                // Append "id" {@link BookEntry#CONTENT_URI}.
+                Uri currentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, id);
 
                 // Set the URI on the data field of the intent
-                intent.setData(currentPetUri);
+                intent.setData(currentBookUri);
 
                 // Launch the {@link EditorActivity} to display the data.
                 startActivity(intent);
@@ -99,7 +99,7 @@ public class CatalogActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Update {@link PetCursorAdapter} with this new cursor containing updated pet data
+        // Update {@link BookCursorAdapter} with updated data
         mCursorAdapter.swapCursor(data);
     }
 

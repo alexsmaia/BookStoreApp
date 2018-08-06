@@ -58,4 +58,12 @@
 
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/cart_btn"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:background="@color/list_price"
+        android:padding="8dp"
+        android:src="@drawable/ic_action_cart" />
+
 </LinearLayout>
