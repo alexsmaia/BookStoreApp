@@ -8,22 +8,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.android.bookstoreapp.data.BookDbHelper;
 import com.example.android.bookstoreapp.data.BookContract.BookEntry;
 
 /**
@@ -67,8 +64,6 @@ public class EditorActivity extends AppCompatActivity implements
         }
     };
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +101,28 @@ public class EditorActivity extends AppCompatActivity implements
         mQuantityEditText.setOnTouchListener(mTouchListener);
         mSupplierNameEditText.setOnTouchListener(mTouchListener);
         mSupplierPhoneNumberEditText.setOnTouchListener(mTouchListener);
+
+        // Setup FAB to call Supplier
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String supplierNumber = mSupplierPhoneNumberEditText.getText().toString().trim();
+                // Check if phone number exist
+                if (supplierNumber != "") {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + supplierNumber));
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(intent);
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), getText(R.string.noPhoneNumber), Toast.LENGTH_SHORT).show();
+                }
+
+                // Toast.makeText(getApplicationContext(), supplierNumber, Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
     }
 
@@ -324,6 +341,8 @@ public class EditorActivity extends AppCompatActivity implements
             mQuantityEditText.setText(Integer.toString(quantity));
             mSupplierNameEditText.setText(supplierName);
             mSupplierPhoneNumberEditText.setText(Integer.toString(supplierPhoneNumber));
+
+
         }
     }
 
@@ -372,7 +391,7 @@ public class EditorActivity extends AppCompatActivity implements
         builder.setPositiveButton(R.string.action_delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked "Delete".
-                deletePet();
+                deleteBook();
             }
         });
         builder.setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
@@ -392,7 +411,7 @@ public class EditorActivity extends AppCompatActivity implements
     /**
      * Delete book from database.
      */
-    private void deletePet() {
+    private void deleteBook() {
         // Check book exist.
         if (mCurrentBookUri != null) {
             // Call the ContentResolver to delete the book.

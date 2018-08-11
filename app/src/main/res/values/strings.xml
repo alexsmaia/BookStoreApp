@@ -30,6 +30,7 @@
     <string name="delete_book_successful">Book deleted</string>
     <string name="item_byed">You bye the item</string>
     <string name="out_stock">Out of stock</string>
+    <string name="noPhoneNumber">Please add a phone number first!</string>
 
     <!-- Actions Labels -->
     <string name="action_save">Save</string>
