@@ -3,6 +3,7 @@ package com.example.android.bookstoreapp;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -69,7 +70,7 @@ public class BookCursorAdapter extends CursorAdapter {
         final int id = cursor.getInt(cursor.getColumnIndex(BookEntry._ID));
 
         // Read the attributes from the Cursor for the current book
-        String bookProductName = cursor.getString(productNameColumnIndex);
+        final String bookProductName = cursor.getString(productNameColumnIndex);
         String bookQuantity = cursor.getString(quantityColumnIndex);
         String bookPrice = cursor.getString(priceColumnIndex);
 
@@ -83,7 +84,6 @@ public class BookCursorAdapter extends CursorAdapter {
         cart_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (iQuantity > 0) {
                     int updateQuantity = iQuantity - 1;
 
@@ -94,10 +94,9 @@ public class BookCursorAdapter extends CursorAdapter {
                     ContentValues values = new ContentValues();
                     values.put(BookEntry.COLUMN_QUANTITY, updateQuantity);
                     mContext.getContentResolver().update(quantityUri, values, null, null);
-                    Toast.makeText(mContext, R.string.item_byed, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, mContext.getString(R.string.book_bought, bookProductName), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(mContext, R.string.out_stock, Toast.LENGTH_LONG).show();
-
                 }
             }
         });
