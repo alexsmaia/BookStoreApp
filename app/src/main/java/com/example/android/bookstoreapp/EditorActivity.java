@@ -31,6 +31,12 @@ import com.example.android.bookstoreapp.data.BookContract.BookEntry;
 public class EditorActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
+
+    /**
+     * For validation check, only save if true
+     */
+    private boolean mSaveBook = false;
+
     /**
      * Identifier for the book data loader
      */
@@ -121,7 +127,8 @@ public class EditorActivity extends AppCompatActivity implements
                     Toast.makeText(getApplicationContext(), getText(R.string.quantity0), Toast.LENGTH_SHORT).show();
                 }
             }
-        });// Quantity Up
+        });
+        // Quantity Up
         upQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,36 +173,27 @@ public class EditorActivity extends AppCompatActivity implements
         String sSupplierName = mSupplierNameEditText.getText().toString().trim();
         String sSupplierPhoneNumber = mSupplierPhoneNumberEditText.getText().toString().trim();
 
-        // Check if all the fields in the editor are blank
-        if (mCurrentBookUri == null &&
-                TextUtils.isEmpty(sProductName) &&
-                TextUtils.isEmpty(sPrice) &&
-                TextUtils.isEmpty(sQuantity) &&
-                TextUtils.isEmpty(sSupplierName) &&
-                TextUtils.isEmpty(sSupplierPhoneNumber)) {
-            // No fields were modified, return early without creating a new Book.
+        // Check if isn't no fill empty
+        if (sProductName.matches("") ||
+                sPrice.matches("") ||
+                sQuantity.matches("") ||
+                sSupplierName.matches("") ||
+                sSupplierPhoneNumber.matches("")) {
+            Toast.makeText(this, getString(R.string.save_book_empty), Toast.LENGTH_SHORT).show();
             return;
+        } else {
+            mSaveBook = true;
         }
 
-        // Create a ContentValues object where column names are the keys,
+        // Parse int values
+        int iPrice = Integer.parseInt(sPrice);
+        int iQuantity = Integer.parseInt(sQuantity);
+        int iSupplierPhoneNumber = Integer.parseInt(sSupplierPhoneNumber);
+
+        // Create a ContentValues object where column names are the keys
         ContentValues values = new ContentValues();
         values.put(BookEntry.COLUMN_PRODUCT_NAME, sProductName);
         values.put(BookEntry.COLUMN_SUPPLIER_MAME, sSupplierName);
-        // If the int is not provided don't parse use 0 by default.
-        int iPrice = 0;
-        int iQuantity = 0;
-        int iSupplierPhoneNumber = 0;
-
-        if (!TextUtils.isEmpty(sPrice)) {
-            iPrice = Integer.parseInt(sPrice);
-        }
-        if (!TextUtils.isEmpty(sQuantity)) {
-            iQuantity = Integer.parseInt(sQuantity);
-        }
-        if (!TextUtils.isEmpty(sSupplierPhoneNumber)) {
-            iSupplierPhoneNumber = Integer.parseInt(sSupplierPhoneNumber);
-        }
-
         values.put(BookEntry.COLUMN_PRICE, iPrice);
         values.put(BookEntry.COLUMN_QUANTITY, iQuantity);
         values.put(BookEntry.COLUMN_SUPPLIER_PHONE_NUMBER, iSupplierPhoneNumber);
@@ -261,8 +259,10 @@ public class EditorActivity extends AppCompatActivity implements
             case R.id.action_save:
                 // Save book to database
                 saveBook();
-                // Exit activity
-                finish();
+                // Exit activity if validation ok
+                if (mSaveBook) {
+                    finish();
+                }
                 return true;
             // Respond click on the "Delete"
             case R.id.action_delete:
